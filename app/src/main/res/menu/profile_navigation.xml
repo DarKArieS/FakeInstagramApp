@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/profNav_grid"
+            android:icon="@drawable/ic_grid_on_black_24dp"
+            android:title="Grid"
+    />
+
+    <item
+            android:id="@+id/profNav_detailed"
+            android:icon="@drawable/ic_view_day_black_24dp"
+            android:title="Detailed"/>
+
+    <item
+            android:id="@+id/profNav_related"
+            android:icon="@drawable/ic_assignment_ind_black_24dp"
+            android:title="Related"/>
+
+</menu>

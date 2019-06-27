@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+>
+
+    <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:theme="?attr/actionBarTheme"
+            android:minHeight="?attr/actionBarSize"
+            app:title="People"
+            android:id="@+id/postToolbar"
+            tools:layout_editor_absoluteX="0dp"
+            app:layout_constraintTop_toTopOf="parent" app:subtitle="position"/>
+    <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/ic_photo_black_24dp"
+            android:id="@+id/postImage"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/postToolbar"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/ic_heart"
+            android:id="@+id/favoriteIcon" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/postImage" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/ic_turned_in_not_black_24dp"
+            android:id="@+id/favoriteIcon4"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/postImage"
+            android:layout_marginEnd="8dp"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/ic_send_black_24dp"
+            android:id="@+id/sendIcon" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/postImage"
+            app:layout_constraintStart_toEndOf="@+id/commentIcon" android:layout_marginStart="8dp"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/ic_chat_bubble_outline_black_24dp"
+            android:id="@+id/commentIcon" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/postImage"
+            app:layout_constraintStart_toEndOf="@+id/favoriteIcon" android:layout_marginStart="8dp"/>
+    <TextView
+            android:text="n 個讚"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/likeNumberTextView" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/commentIcon" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"/>
+    <TextView
+            android:text="廢文一籮筐"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/contentTextView" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/likeNumberTextView"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
+    <TextView
+            android:text="查看 n 則留言"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/numberCommentsTextView"
+            android:textColor="@color/lightText" app:layout_constraintTop_toBottomOf="@+id/contentTextView"
+            android:layout_marginTop="8dp" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,11 +4,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 
 abstract class FragNaviManager(private val fragmentManager: FragmentManager,
-                                 private val fragmentContainer:Int,
-                                 var currentFragmentTag:String)
+                               private val fragmentContainer:Int,
+                               val homeFragmentTag:String)
 {
+    var currentLateralFragmentTag = homeFragmentTag
+
     init{
-        navigateTo(currentFragmentTag)
+        if (null==fragmentManager.findFragmentById(fragmentContainer)){
+            val transaction = fragmentManager.beginTransaction()
+            transaction.add(fragmentContainer, createFragment(homeFragmentTag)!!,homeFragmentTag)
+            transaction.commit()
+        }
     }
 
     private enum class FragmentStatus{
@@ -17,25 +23,57 @@ abstract class FragNaviManager(private val fragmentManager: FragmentManager,
         var existFragment: Fragment? = null
     }
 
-    fun navigateTo(tag:String){
+    fun lateralNavigateTo(
+        tag:String,
+        addToBackStack: Boolean=false
+    ){
         // ToDoDone: study: use show/hide or attach/detach
         // use attach/detach is memory saved but laggy ...
         // attach/detach will remove the fragment from back stack !?
-        val status = checkFragmentStatus(tag)
+        val status = checkLateralFragmentStatus(tag)
         if(status == FragmentStatus.SAME) return
-        val currentFrag = fragmentManager.findFragmentByTag(currentFragmentTag)
-        val transaction = fragmentManager.beginTransaction()
-        if(currentFrag!=null) transaction.hide(currentFrag)
-        if(status == FragmentStatus.ABSENCE){
-            status.existFragment = createFragment(tag)
-            transaction.add(fragmentContainer,status.existFragment!!,tag)
-        }else transaction.show(status.existFragment!!)
-        transaction.commit()
 
-        currentFragmentTag = tag
+        val currentFrag = fragmentManager.findFragmentByTag(currentLateralFragmentTag)
+        val transaction = fragmentManager.beginTransaction()
+
+        if(currentFrag!=null) transaction.hide(currentFrag)
+
+        when(status){
+            FragmentStatus.ABSENCE->{
+                status.existFragment = createFragment(tag)
+                transaction.add(fragmentContainer,status.existFragment!!,tag)
+            }
+            FragmentStatus.EXIST->{
+                transaction.show(status.existFragment!!)
+            }
+            else->{}
+        }
+
+        if(addToBackStack) transaction.addToBackStack(null)
+
+        transaction.commit()
+        currentLateralFragmentTag = tag
     }
 
-    private fun checkFragmentStatus(tag:String):FragmentStatus{
+    fun lateralOnBackPressed(superCallback:()->Unit){
+        val backEntry = fragmentManager.getBackStackEntryAt(fragmentManager.backStackEntryCount - 1)
+        if(backEntry.name == "")
+        superCallback.invoke()
+
+        val frag = fragmentManager.findFragmentById(fragmentContainer)
+        if(null != frag?.tag && currentLateralFragmentTag != frag.tag){
+            currentLateralFragmentTag = frag.tag!!
+        }
+    }
+
+    fun forwardNavigate(tag:String,addToBackStack: Boolean=false){
+        val tr = fragmentManager.beginTransaction()
+        tr.replace(fragmentContainer,createFragment(tag)!!,tag)
+        if(addToBackStack) tr.addToBackStack(currentLateralFragmentTag)
+        tr.commit()
+    }
+
+    private fun checkLateralFragmentStatus(tag:String):FragmentStatus{
         val foundFrag = fragmentManager.findFragmentByTag(tag)
         val status = when{
             (foundFrag == null)->FragmentStatus.ABSENCE
