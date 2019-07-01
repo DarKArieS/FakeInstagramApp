@@ -1,6 +1,5 @@
 package com.app.aries.fakeinstagramapp
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.ActionBar
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupFragment(){
         fragNaviManager = object: FragNaviManager(
             this.supportFragmentManager,
-            R.id.FragmentContainer,
+            R.id.fragmentContainer,
             HomeFragment::class.java.name
         ){
             override fun createFragment(tag: String): Fragment? {
